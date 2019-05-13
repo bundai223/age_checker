@@ -1,6 +1,7 @@
 // vue.config.js
 module.exports = {
   // options
+  baseUrl: './',
   publicPath: './',
   devServer: {
     host: '0.0.0.0',
