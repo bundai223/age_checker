@@ -1,8 +1,9 @@
 // vue.config.js
 module.exports = {
   // options
-  baseUrl: './',
-  publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/age_checker/'
+    : '/',
   devServer: {
     host: '0.0.0.0',
     public: '0.0.0.0:8080',
@@ -16,3 +17,4 @@ module.exports = {
     }
   }
 }
+console.log(`publicPath: ${process.env.NODE_ENV === 'production' ? '/age_checker/' : '/'}`)

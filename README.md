@@ -37,3 +37,8 @@ yarn run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Preview production
+```
+docker run --rm -p 80:80 -v $(pwd)/dist:/usr/share/nginx/html/age_checker --name nginx-age_checker nginx
+```
