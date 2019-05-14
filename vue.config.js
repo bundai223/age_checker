@@ -17,4 +17,3 @@ module.exports = {
     }
   }
 }
-console.log(`publicPath: ${process.env.NODE_ENV === 'production' ? '/age_checker/' : '/'}`)
