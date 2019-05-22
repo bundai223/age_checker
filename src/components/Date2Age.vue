@@ -1,14 +1,16 @@
 <template>
   <div class="date2age row">
-    <div class='three columns'>
+    <div class='six columns'>
       <form v-if='editing'>
         <input class='u-full-width' v-model='birthday' type='text' placeholder='2019/01/01'></input>
+        <a class='button'>#</a>
       </form>
       <div v-else>{{ birthday }}</div>
+      <span v-if='isCollect()'>{{ dateJp }}</span>
     </div>
-    <div class='nine columns'>
-      <div v-if='isCollect()'>{{ dateJp }}</div>
-      <div v-if='isCollect()'>{{ age }}</div>
+    <div class='six columns'>
+      <br>
+      <h3 v-if='isCollect()'>{{ age }}歳</h3>
     </div>
   </div>
 </template>

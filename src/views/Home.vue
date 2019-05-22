@@ -1,6 +1,8 @@
 <template>
-  <div class="home">
+  <div class="home container">
+    <hr>
     <Date2Age/>
+    <hr>
   </div>
 </template>
 
