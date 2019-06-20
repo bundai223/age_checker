@@ -20,31 +20,37 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Date2Age extends Vue {
-  public birthday: string = ''
-  editing: boolean = true
+  public birthday: string = '';
+  private editing: boolean = true;
 
   get age(): number {
-    const today = new Date()
-    const birth = this.date
-    return Math.floor((this.date2num(today) - this.date2num(birth)) / 10000)
+    const today = new Date();
+    const birth = this.date;
+    return Math.floor((this.date2num(today) - this.date2num(birth)) / 10000);
   }
 
   get date(): Date {
-    return new Date(this.birthday)
+    return new Date(this.birthday);
   }
 
   get dateJp(): string {
-    var options = { era: 'long' }
-    return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date)
+    const options = { era: 'long' };
+    return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date);
   }
 
   private isCollect(): boolean {
-    var d = new Date(this.birthday)
-    return !(d.toString() === 'Invalid Date')
+    const d = new Date(this.birthday);
+    return !(d.toString() === 'Invalid Date');
   }
 
   private date2num(d: Date): number {
-    return Number(d.getFullYear().toString().padStart(4, '0') + d.getMonth().toString().padStart(2, '0') + d.getDate().toString().padStart(2, '0'))
+    return Number(
+      this.padNumber(d.getFullYear(), 4) + this.padNumber(d.getMonth(), 2) + this.padNumber(d.getDate(), 2)
+    );
+  }
+
+  private padNumber(num: number, paddingCount: number): string {
+    return num.toString().padStart(paddingCount, '0');
   }
 }
 </script>
