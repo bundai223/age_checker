@@ -3,10 +3,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
-import 'skeleton-css/css/normalize.css';
-import 'skeleton-css/css/skeleton.css';
+import Vuetify from 'vuetify';
 
 Vue.config.productionTip = false;
+
+Vue.use(Vuetify);
 
 new Vue({
   router,

@@ -1,9 +1,9 @@
 <template>
-  <div class="home container">
-    <hr>
-    <Date2Age/>
-    <hr>
-  </div>
+  <v-layout row wrap>
+    <v-flex xs12 sm12 md12>
+      <Date2Age/>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">

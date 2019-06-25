@@ -1,5 +1,5 @@
 <template>
-  <div class="date2age row">
+  <v-card class="date2age row">
     <div class='six columns'>
       <form v-if='editing'>
         <input class='u-full-width' v-model='birthday' type='text' placeholder='2019/01/01'></input>
@@ -12,7 +12,7 @@
       <br>
       <h3 v-if='isCollect()'>{{ age }}歳</h3>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -57,18 +57,4 @@ export default class Date2Age extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
