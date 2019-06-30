@@ -1,17 +1,19 @@
 <template>
-  <v-card class="date2age row">
-    <div class='six columns'>
-      <form v-if='editing'>
-        <input class='u-full-width' v-model='birthday' type='text' placeholder='2019/01/01'></input>
-        <a class='button'>#</a>
-      </form>
-      <div v-else>{{ birthday }}</div>
-      <span v-if='isCollect()'>{{ dateJp }}</span>
-    </div>
-    <div class='six columns'>
-      <br>
-      <h3 v-if='isCollect()'>{{ age }}歳</h3>
-    </div>
+  <v-card row>
+    <v-layout>
+      <v-flex xs3 sm3 md3>
+        <h1 v-if='isCollect()'>{{ age }}歳</h1>
+      <h1 v-else>_</h1>
+      </v-flex>
+      <v-flex xs9 sm9 md9>
+        <v-form v-if='editing'>
+          <v-text-field v-model='title' type='text' placeholder='title'></v-text-field>
+          <v-text-field v-model='birthday' type='text' placeholder='2019/01/01'></v-text-field>
+        </v-form>
+        <div v-else>{{ birthday }}</div>
+        <span v-if='isCollect()'>{{ dateJp }}</span>
+      </v-flex>
+    </v-layout>
   </v-card>
 </template>
 
@@ -21,6 +23,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Date2Age extends Vue {
   public birthday: string = '';
+  public title: string = '';
   private editing: boolean = true;
 
   get age(): number {
@@ -57,4 +60,8 @@ export default class Date2Age extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+v-card {
+  margin: 8px;
+}
 </style>
