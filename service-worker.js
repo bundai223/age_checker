@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/age_checker/precache-manifest.2d1c057e09b97e2c82fccc1816f7a53c.js"
+  "/age_checker/precache-manifest.b15025d426f10c364f9e804e800c343f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "age_checker"});
