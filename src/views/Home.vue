@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <github-corners repo='bundai223/age_checker'></github-corners>
+    <!--<github-corners repo='bundai223/age_checker'></github-corners>-->
     <v-toolbar app>Age checker</v-toolbar>
     <v-content>
       <v-container>
@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Date2Age from '@/components/Date2Age.vue';
+
 
 @Component({
   components: {
