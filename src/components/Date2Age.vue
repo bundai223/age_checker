@@ -1,16 +1,19 @@
 <template>
-  <v-card row>
+  <v-card>
     <v-layout>
-      <v-flex xs3 sm3 md3>
-        <h1 v-if='isCollect()'>{{ age }}歳</h1>
-      <h1 v-else>_</h1>
+      <v-flex xs6 sm6 md6>
+        <v-layout class='align-baseline' v-if='isCollect()'>
+          <v-card-text class='display-4'>{{ age }}</v-card-text>
+          <v-card-text class='display-1'>歳</v-card-text>
+        </v-layout>
       </v-flex>
-      <v-flex xs9 sm9 md9>
-        <v-form v-if='editing'>
-          <v-text-field v-model='title' type='text' placeholder='title'></v-text-field>
-          <v-text-field v-model='birthday' type='text' placeholder='2019/01/01'></v-text-field>
+      <v-flex xs6 sm6 md6>
+        <v-form>
+          <v-text-field v-model='title' v-if='editingTitle_' type='text' placeholder='title'></v-text-field>
+          <v-text-field v-model='title' v-else disabled type='text' v-on:click='editTitle()' placeholder='title'></v-text-field>
+          <v-text-field v-model='birthday' v-if='edigintDate_' type='text' placeholder='2019/01/01'></v-text-field>
+          <v-text-field v-model='birthday' v-else disabled type='text' v-on:click='editDate()' placeholder='2019/01/01'></v-text-field>
         </v-form>
-        <div v-else>{{ birthday }}</div>
         <span v-if='isCollect()'>{{ dateJp }}</span>
       </v-flex>
     </v-layout>
@@ -24,7 +27,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Date2Age extends Vue {
   public birthday: string = '';
   public title: string = '';
-  private editing: boolean = true;
+  private editingTitle_: boolean = true;
+  private edigintDate_: boolean = true;
 
   get age(): number {
     const today = new Date();
@@ -41,6 +45,12 @@ export default class Date2Age extends Vue {
     return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date);
   }
 
+  get editing(): boolean {
+    if (this.editingTitle_) { return true; }
+    if (this.edigintDate_) { return true; }
+    return false;
+  }
+
   private isCollect(): boolean {
     const d = new Date(this.birthday);
     return !(d.toString() === 'Invalid Date');
@@ -54,6 +64,14 @@ export default class Date2Age extends Vue {
 
   private padNumber(num: number, paddingCount: number): string {
     return num.toString().padStart(paddingCount, '0');
+  }
+
+  private editDate() {
+    this.edigintDate_ = true;
+  }
+
+  private editTitle() {
+    this.editingTitle_ = true;
   }
 }
 </script>

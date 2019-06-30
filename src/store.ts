@@ -1,16 +1,21 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import {
+  Mutation,
+  Action,
+  VuexModule,
+  Module
+} from 'vuex-module-decorators';
 
-Vue.use(Vuex);
+class DateData {
+  public title: string = '';
+  public date: Date = new Date();
+}
 
-export default new Vuex.Store({
-  state: {
+@Module
+export default class Dates extends VuexModule {
+  private dates: DateData[] = new Array<DateData>();
 
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
-});
+  @Mutation
+  public ADD_DATE(title: String, date: Date) {
+    this.dates.push(new DateData())
+  }
+}
