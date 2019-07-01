@@ -9,9 +9,9 @@
       </v-flex>
       <v-flex xs6 sm6 md6>
         <v-form>
-          <v-text-field v-model='title' v-if='editingTitle_' type='text' placeholder='title'></v-text-field>
+          <v-text-field v-model='title' v-if='editingTitle' type='text' placeholder='title'></v-text-field>
           <v-text-field v-model='title' v-else disabled type='text' v-on:click='editTitle()' placeholder='title'></v-text-field>
-          <v-text-field v-model='birthday' v-if='edigintDate_' type='text' placeholder='2019/01/01'></v-text-field>
+          <v-text-field v-model='birthday' v-if='editingDate' type='text' placeholder='2019/01/01'></v-text-field>
           <v-text-field v-model='birthday' v-else disabled type='text' v-on:click='editDate()' placeholder='2019/01/01'></v-text-field>
         </v-form>
         <span v-if='isCollect()'>{{ dateJp }}</span>
@@ -27,8 +27,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Date2Age extends Vue {
   public birthday: string = '';
   public title: string = '';
-  private editingTitle_: boolean = true;
-  private edigintDate_: boolean = true;
+  private editingTitle: boolean = true;
+  private editingDate: boolean = true;
 
   get age(): number {
     const today = new Date();
@@ -46,8 +46,8 @@ export default class Date2Age extends Vue {
   }
 
   get editing(): boolean {
-    if (this.editingTitle_) { return true; }
-    if (this.edigintDate_) { return true; }
+    if (this.editingTitle) { return true; }
+    if (this.editingDate) { return true; }
     return false;
   }
 
@@ -67,11 +67,11 @@ export default class Date2Age extends Vue {
   }
 
   private editDate() {
-    this.edigintDate_ = true;
+    this.editingDate = true;
   }
 
   private editTitle() {
-    this.editingTitle_ = true;
+    this.editingTitle = true;
   }
 }
 </script>

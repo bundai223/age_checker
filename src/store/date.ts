@@ -11,7 +11,7 @@ class DateData {
 }
 
 @Module
-export default class Dates extends VuexModule {
+class Dates extends VuexModule {
   private dates: DateData[] = new Array<DateData>();
 
   @Mutation
@@ -24,3 +24,5 @@ export default class Dates extends VuexModule {
     return 5;
   }
 }
+
+export default Dates;
