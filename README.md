@@ -1,5 +1,9 @@
 # age_checker
 
+
+![last commit](https://img.shields.io/github/last-commit/bundai223/age_checker.svg)
+[![CircleCI](https://circleci.com/gh/bundai223/age_checker/tree/master.svg?style=svg)](https://circleci.com/gh/bundai223/age_checker/tree/master)
+
 ## Project setup
 ```
 yarn install

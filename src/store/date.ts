@@ -1,28 +1,38 @@
 import {
+  MutationAction,
   Mutation,
   Action,
   VuexModule,
   Module
 } from 'vuex-module-decorators';
 
-class DateData {
+export interface DateData {
   public title: string = '';
   public date: Date = new Date();
 }
 
 @Module
-class Dates extends VuexModule {
-  private dates: DateData[] = new Array<DateData>();
+export default class Dates extends VuexModule {
+  private dates: DateData[] = [];
 
-  @Mutation
-  public addDate(title: string, date: Date) {
-    this.dates.push(new DateData());
+  get dateData() {
+    return this.dates;
   }
 
-  @Action({ commit: 'addDate' })
-  add() {
-    return 5;
+  @MutationAction({ mutate: ['dates'] })
+  public async newDate(title: string, date: Date) {
+    return {
+      dates: this.dates.push({})
+    };
   }
-}
 
-export default Dates;
+//   @Mutation
+//   public addDate(title: string, date: Date) {
+//     this.dates.push(new DateData());
+//   }
+
+//   @Action({ commit: 'addDate' })
+//   public add() {
+//     return 5;
+//   }
+// }

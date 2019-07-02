@@ -35,8 +35,8 @@ import Date2Age from '@/components/Date2Age.vue';
 @Component({
   components: {
     Date2Age,
-  }
-});
+  },
+})
 
 export default class Home extends Vue {}
 </script>
