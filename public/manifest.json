@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Age Checker",
+  "short_name": "Age Checker",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
