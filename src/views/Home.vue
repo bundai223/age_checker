@@ -14,13 +14,14 @@
           fab
           top
           right
-          color='pink'
+          color="pink"
+          @click="addDate"
         >
           <v-icon>add</v-icon>
         </v-btn>
         <v-layout row wrap>
           <v-flex xs12 sm12 md12>
-            <Date2Age/>
+            <Date2Age v-for="d in dates" :title=d.title :birthday=d.date />
           </v-flex>
         </v-layout>
       </v-container>
@@ -31,12 +32,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Date2Age from '@/components/Date2Age.vue';
+import dateStore from '@/store/date';
 
 @Component({
-  components: {
-    Date2Age,
-  },
+    components: {
+        Date2Age,
+    },
 })
+export default class Home extends Vue {
+    get dates(): Array<IDateDatum> {
+        return dateStore.dateData;
+    }
 
-export default class Home extends Vue {}
+    public async addDate() {
+        await dateStore.addDate();
+    }
+}
 </script>
