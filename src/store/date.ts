@@ -6,23 +6,27 @@ import {
     Module
 } from 'vuex-module-decorators';
 
-export interface DateData {
+export interface IDateDatum {
     title: string;
     date: Date;
 }
 
+export interface IDateData {
+    dates: IDateDatum[];
+}
+
 @Module
-export default class Dates extends VuexModule {
-    private dates: DateData[] = [];
+export default class Dates extends VuexModule implements IDateData {
+    dates: IDateDatum[] = [];
 
     get dateData() {
         return this.dates;
     }
 
     @MutationAction({ mutate: ['dates'] })
-    public async newDate(title: string, date: Date) {
+    public async newDate() {
         return {
-            dates: this.dates.push({ title: title, date: date })
+            dates: this.dates.push({ title: '', date: new Date() })
         };
     }
 
