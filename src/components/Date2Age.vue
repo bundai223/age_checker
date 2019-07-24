@@ -21,63 +21,63 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Date2Age extends Vue {
     public birthday_str: string = '';
     private editingTitle: boolean = true;
     private editingDate: boolean = true;
-    
+
     @Prop() title: string;
     @Prop() birthday: Date?;
-    
+
     get age(): number {
         const today = new Date();
         const birth = this.date;
         return Math.floor((this.date2num(today) - this.date2num(birth)) / 10000);
     }
-    
+
     get date(): Date {
         return new Date(this.birthday_str);
     }
-    
+
     get dateJp(): string {
         const options = { era: 'long' };
         return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date);
     }
-    
+
     get editing(): boolean {
         if (this.editingTitle) { return true; }
         if (this.editingDate) { return true; }
         return false;
     }
-    
+
     created() {
         if (this.birthday) {
             this.birthday_str = this.birthday.toLocaleDateString();
         }
     }
-    
+
     private isCollect(): boolean {
         const d = new Date(this.birthday_str);
         return !(d.toString() === 'Invalid Date');
     }
-    
+
     private date2num(d: Date): number {
         return Number(
             this.padNumber(d.getFullYear(), 4) + this.padNumber(d.getMonth(), 2) + this.padNumber(d.getDate(), 2)
         );
     }
-    
+
     private padNumber(num: number, paddingCount: number): string {
         return num.toString().padStart(paddingCount, '0');
     }
-    
+
     private editDate() {
         this.editingDate = true;
     }
-    
+
     private editTitle() {
         this.editingTitle = true;
     }
