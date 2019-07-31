@@ -1,86 +1,91 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-flex xs6 sm6 md6>
-        <v-layout class='align-baseline' v-if='isCollect()'>
-          <v-card-text class='display-4'>{{ age }}</v-card-text>
-          <v-card-text class='display-1'>歳</v-card-text>
-        </v-layout>
-      </v-flex>
-      <v-flex xs6 sm6 md6>
-        <v-form>
-          <v-text-field v-model='title' v-if='editingTitle' type='text' placeholder='title'></v-text-field>
-          <v-text-field v-model='title' v-else disabled type='text' v-on:click='editTitle()' placeholder='title'></v-text-field>
-          <v-text-field v-model='birthday_str' v-if='editingDate' type='text' placeholder='2019/01/01'></v-text-field>
-          <v-text-field v-model='birthday_str' v-else disabled type='text' v-on:click='editDate()' placeholder='2019/01/01'></v-text-field>
-        </v-form>
-        <span v-if='isCollect()'>{{ dateJp }}</span>
-      </v-flex>
-    </v-layout>
-  </v-card>
+<v-card>
+  <v-layout>
+    <v-flex xs6 sm6 md6>
+      <v-layout class='align-baseline' v-if='isCollect()'>
+        <v-card-text class='display-4'>{{ age }}</v-card-text>
+        <v-card-text class='display-1'>歳</v-card-text>
+      </v-layout>
+    </v-flex>
+    <v-flex xs6 sm6 md6>
+      <v-form>
+        <v-text-field v-model='title' v-if='editingTitle' type='text' v-on:change='updateDate()' placeholder='title'></v-text-field>
+        <v-text-field v-model='title' v-else disabled type='text' v-on:click='editTitle()' placeholder='title'></v-text-field>
+        <v-text-field v-model='birthday_str' v-if='editingDate' type='text' v-on:change='updateDate()' placeholder='2019/01/01'></v-text-field>
+        <v-text-field v-model='birthday_str' v-else disabled type='text' v-on:click='editDate()' placeholder='2019/01/01'></v-text-field>
+      </v-form>
+      <span v-if='isCollect()'>{{ dateJp }}</span>
+    </v-flex>
+  </v-layout>
+</v-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import dateStore from '@/store/date';
 
 @Component
 export default class Date2Age extends Vue {
-    public birthday_str: string = '';
-    private editingTitle: boolean = true;
-    private editingDate: boolean = true;
+  public birthday_str: string = '';
+  private editingTitle: boolean = true;
+  private editingDate: boolean = true;
 
-    @Prop() title: string;
-    @Prop() birthday: Date?;
+  @Prop() title: string;
+  @Prop() birthday: Date?;
 
-    get age(): number {
-        const today = new Date();
-        const birth = this.date;
-        return Math.floor((this.date2num(today) - this.date2num(birth)) / 10000);
+  get age(): number {
+    const today = new Date();
+    const birth = this.date;
+    return Math.floor((this.date2num(today) - this.date2num(birth)) / 10000);
+  }
+
+  get date(): Date {
+    return new Date(this.birthday_str);
+  }
+
+  get dateJp(): string {
+    const options = { era: 'long' };
+    return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date);
+  }
+
+  get editing(): boolean {
+    if (this.editingTitle) { return true; }
+    if (this.editingDate) { return true; }
+    return false;
+  }
+
+  created() {
+    if (this.birthday) {
+      this.birthday_str = this.birthday.toLocaleDateString();
     }
+  }
 
-    get date(): Date {
-        return new Date(this.birthday_str);
-    }
+  private isCollect(): boolean {
+    const d = new Date(this.birthday_str);
+    return !(d.toString() === 'Invalid Date');
+  }
 
-    get dateJp(): string {
-        const options = { era: 'long' };
-        return new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(this.date);
-    }
+  private date2num(d: Date): number {
+    return Number(
+      this.padNumber(d.getFullYear(), 4) + this.padNumber(d.getMonth(), 2) + this.padNumber(d.getDate(), 2)
+    );
+  }
 
-    get editing(): boolean {
-        if (this.editingTitle) { return true; }
-        if (this.editingDate) { return true; }
-        return false;
-    }
+  private padNumber(num: number, paddingCount: number): string {
+    return num.toString().padStart(paddingCount, '0');
+  }
 
-    created() {
-        if (this.birthday) {
-            this.birthday_str = this.birthday.toLocaleDateString();
-        }
-    }
+  private editDate() {
+    this.editingDate = true;
+  }
 
-    private isCollect(): boolean {
-        const d = new Date(this.birthday_str);
-        return !(d.toString() === 'Invalid Date');
-    }
+  private editTitle() {
+    this.editingTitle = true;
+  }
 
-    private date2num(d: Date): number {
-        return Number(
-            this.padNumber(d.getFullYear(), 4) + this.padNumber(d.getMonth(), 2) + this.padNumber(d.getDate(), 2)
-        );
-    }
-
-    private padNumber(num: number, paddingCount: number): string {
-        return num.toString().padStart(paddingCount, '0');
-    }
-
-    private editDate() {
-        this.editingDate = true;
-    }
-
-    private editTitle() {
-        this.editingTitle = true;
-    }
+  private async updateDate() {
+    debounce( async () => { await dateStore.addDate() }, 1000);
+  }
 }
 </script>
 

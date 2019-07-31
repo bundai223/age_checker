@@ -1,40 +1,50 @@
 import {
-    MutationAction,
-    Mutation,
-    Action,
-    VuexModule,
-    getModule,
-    Module
+  MutationAction,
+  Mutation,
+  Action,
+  VuexModule,
+  getModule,
+  Module
 } from 'vuex-module-decorators';
 import store from '@/store';
 
 export interface IDateDatum {
-    title: string;
-    date: Date?;
+  title: string;
+  date: Date | null;
 }
 
 @Module({
-    dynamic: true,
-    namespaced: true,
-    name: 'date',
-    store,
+  dynamic: true,
+  namespaced: true,
+  name: 'date',
+  store,
 })
 class DateModule extends VuexModule {
-    dates: Array<IDateDatum> = [];
+  dates: IDateDatum[] = [];
 
-    get dateData(): Array<IDateDatum> {
-        return this.dates;
-    }
+  get dateData(): IDateDatum[] {
+    return this.dates;
+  }
 
-    @Mutation
-    private ADD_DATE(title: string, date: Date?) {
-        this.dates.push({ title: title, date: date });
-    }
+  @Mutation
+  private ADD_DATE(title: string, date: Date | null) {
+    this.dates.push({ title, date });
+  }
 
-    @Action
-    public addDate() {
-        this.ADD_DATE('', null);
-    }
+  @Mutation
+  private UPDATE_DATE(index: number, title: string, date: Date | null) {
+    this.dates[index] = { title, date };
+  }
+
+  @Action
+  public addDate() {
+    this.ADD_DATE('', null);
+  }
+
+  @Action
+  public updateDate(index: number, title: string, date: Date | null) {
+    this.UPDATE_DATE(index, title, date);
+  }
 }
 
 export default getModule(DateModule);
