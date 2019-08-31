@@ -9,9 +9,9 @@
     </v-flex>
     <v-flex xs6 sm6 md6>
       <v-form>
-        <v-text-field v-model='title' v-if='editingTitle' type='text' v-on:change='updateDate()' placeholder='title'></v-text-field>
+        <v-text-field v-model='title' v-if='editingTitle' type='text' v-on:change='saveDate()' placeholder='title'></v-text-field>
         <v-text-field v-model='title' v-else disabled type='text' v-on:click='editTitle()' placeholder='title'></v-text-field>
-        <v-text-field v-model='birthday_str' v-if='editingDate' type='text' v-on:change='updateDate()' placeholder='2019/01/01'></v-text-field>
+        <v-text-field v-model='birthday_str' v-if='editingDate' type='text' v-on:change='saveDate()' placeholder='2019/01/01'></v-text-field>
         <v-text-field v-model='birthday_str' v-else disabled type='text' v-on:click='editDate()' placeholder='2019/01/01'></v-text-field>
       </v-form>
       <span v-if='isCollect()'>{{ dateJp }}</span>
@@ -23,15 +23,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import dateStore from '@/store/date';
+import _ from 'lodash';
 
 @Component
 export default class Date2Age extends Vue {
+  public title: string = '';
   public birthday_str: string = '';
   private editingTitle: boolean = true;
   private editingDate: boolean = true;
 
-  @Prop() title: string;
-  @Prop() birthday: Date?;
+  @Prop() initial_title: string;
+  @Prop() initial_date: Date?;
 
   get age(): number {
     const today = new Date();
@@ -55,8 +57,11 @@ export default class Date2Age extends Vue {
   }
 
   created() {
-    if (this.birthday) {
-      this.birthday_str = this.birthday.toLocaleDateString();
+    if (this.title) {
+      this.title = this.initial_title ? this.initial_title : '';
+    }
+    if (this.initial_date) {
+      this.birthday_str = this.initial_date.toLocaleDateString();
     }
   }
 
@@ -83,8 +88,11 @@ export default class Date2Age extends Vue {
     this.editingTitle = true;
   }
 
-  private async updateDate() {
-    debounce( async () => { await dateStore.addDate() }, 1000);
+  private async saveDate() {
+    let index = 0;
+    console.log(`saveDate### [${index}]${this.title} - ${this.date}`)
+    dateStore.updateDate(index, this.title, this.date);
+    // _.debounce( async () => { await dateStore.updateDate(index, this.title, this.date) }, 1000);
   }
 }
 </script>

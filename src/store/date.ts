@@ -33,6 +33,7 @@ class DateModule extends VuexModule {
 
   @Mutation
   private UPDATE_DATE(index: number, title: string, date: Date | null) {
+    console.log(`UPDATE_DATE### ${title}: ${date}`)
     this.dates[index] = { title, date };
   }
 
@@ -43,6 +44,7 @@ class DateModule extends VuexModule {
 
   @Action
   public updateDate(index: number, title: string, date: Date | null) {
+    console.log(`updateDate### [${index}]${title} - ${date}`)
     this.UPDATE_DATE(index, title, date);
   }
 }
