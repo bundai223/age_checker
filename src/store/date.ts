@@ -5,7 +5,7 @@ import {
   VuexModule,
   getModule,
   Module
-} from 'vuex-module-decorators';
+import { get } from 'request';
 import store from '@/store';
 
 export interface IDateDatum {
@@ -37,15 +37,43 @@ class DateModule extends VuexModule {
     this.dates[index] = { title, date };
   }
 
+  @Mutation
+  private SAVE_TO_STORAGE() {
+    console.log(`SAVE_TO_STORAGE###`);
+    localStorage.setItem('age_checker', JSON.stringify(this.dates));
+  }
+
+  @Mutation
+  private RESTORE_FROM_STORAGE() {
+    console.log(`RESTORE_FROM_STORAGE### ${localStorage.getItem('age_checker')}`);
+    // let localstoraged:string | null = localStorage.getItem('age_checker');
+    // if (localstoraged) {
+    //   let storaged_dates: Object[] = JSON.parse(localstoraged);
+    //   this.dates = storaged_dates.map((date_obj:any) : IDateDatum => {
+    //     return { date_obj['title'], date_obj['date'] };
+    //   });
+    // }
+  }
+
   @Action
-  public addDate() {
+  public async initializeDate() {
+    console.log(`initializeDate`);
+    this.RESTORE_FROM_STORAGE();
+  }
+
+  @Action
+  public async addDate() {
     this.ADD_DATE('', null);
   }
 
   @Action
-  public updateDate(index: number, title: string, date: Date | null) {
+  public async updateDate(index_: number, title_: string, date_: Date | null) {
+    const index = await get(index_);
+    const title = await get(title_);
+    const date = await get(date_);
     console.log(`updateDate### [${index}]${title} - ${date}`)
     this.UPDATE_DATE(index, title, date);
+    this.SAVE_TO_STORAGE();
   }
 }
 

@@ -91,7 +91,7 @@ export default class Date2Age extends Vue {
   private async saveDate() {
     let index = 0;
     console.log(`saveDate### [${index}]${this.title} - ${this.date}`)
-    dateStore.updateDate(index, this.title, this.date);
+    await dateStore.updateDate(index, this.title, this.date);
     // _.debounce( async () => { await dateStore.updateDate(index, this.title, this.date) }, 1000);
   }
 }
