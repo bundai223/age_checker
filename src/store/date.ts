@@ -5,6 +5,7 @@ import {
   VuexModule,
   getModule,
   Module
+} from 'vuex-module-decorators';
 import { get } from 'request';
 import store from '@/store';
 
@@ -13,12 +14,7 @@ export interface IDateDatum {
   date: Date | null;
 }
 
-@Module({
-  dynamic: true,
-  namespaced: true,
-  name: 'date',
-  store,
-})
+@Module({ dynamic: true, namespaced: true, name: 'date', store})
 class DateModule extends VuexModule {
   dates: IDateDatum[] = [];
 

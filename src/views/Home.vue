@@ -15,7 +15,7 @@
           top
           right
           color="pink"
-          @click="addDate"
+          @click="newDate"
         >
           <v-icon>add</v-icon>
         </v-btn>
@@ -44,7 +44,7 @@ export default class Home extends Vue {
         return dateStore.dateData;
     }
 
-    public async addDate() {
+    public async newDate() {
         await dateStore.addDate();
     }
 }
