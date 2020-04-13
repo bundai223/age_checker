@@ -4,7 +4,7 @@ ARG GID=1000
 
 WORKDIR /app
 COPY . /app
-RUN npm install && \
+RUN yarn install && \
     apk add --upgrade git openssh-client && \
     chown -R $UID:$GID /app
 

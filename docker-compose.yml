@@ -3,10 +3,10 @@ services:
   app:
     user: ${UID}:${GID}
     build: .
-    command: yarn serve
+    command: yarn start
     entrypoint: /app/docker-entrypoint.sh
     ports:
-      - '8080:8080'
+      - '3000:3000'
     volumes:
       - .:/app
       - ~/.ssh:/home/node/.ssh
