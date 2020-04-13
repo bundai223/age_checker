@@ -4,8 +4,7 @@ ARG GID=1000
 
 WORKDIR /app
 COPY . /app
-RUN yarn install && \
-    yarn global add @vue/cli && \
+RUN npm install && \
     apk add --upgrade git openssh-client && \
     chown -R $UID:$GID /app
 
