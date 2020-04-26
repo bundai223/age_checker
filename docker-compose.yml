@@ -4,7 +4,7 @@ services:
     user: ${UID}:${GID}
     build: .
     command: yarn start
-    entrypoint: /app/docker-entrypoint.sh
+    # entrypoint: /app/docker-entrypoint.sh
     ports:
       - '3000:3000'
     volumes:
