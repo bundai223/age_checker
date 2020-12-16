@@ -3,7 +3,7 @@ services:
   app:
     user: ${UID}:${GID}
     build: .
-    command: yarn start
+    command: npm run dev
     # entrypoint: /app/docker-entrypoint.sh
     ports:
       - '3000:3000'
