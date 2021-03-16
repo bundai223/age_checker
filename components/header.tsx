@@ -9,7 +9,7 @@ export default function Header({
 }) {
   return (
     <div className="hoge">
-      <h1>hogehoe</h1>
+      <h1>Age Checker</h1>
     </div>
   )
 }
